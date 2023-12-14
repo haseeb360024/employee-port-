@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AdminApiService } from '../services/admin-api.service';
+import { ToasterService } from '../services/toaster.service';
 
 @Component({
   selector: 'app-update-admin',
@@ -11,7 +12,8 @@ export class UpdateAdminComponent implements OnInit{
   profileImage:string ="./assets/images/User-icon.png.png"
   editAdminStatus:boolean = false
   adminDetails:any ={}
-  constructor(private api:AdminApiService){}
+  @Output() onAdminChange = new EventEmitter()
+  constructor(private api:AdminApiService, private toaster:ToasterService){}
   ngOnInit(): void {
     //getadmin details
     this.api.authenticate().subscribe((res:any)=>{
@@ -36,5 +38,23 @@ export class UpdateAdminComponent implements OnInit{
       this.adminDetails.picture=this.profileImage
       
     }
+  }
+  updateAdmin(){
+    this.api.updateAdmin(this.adminDetails).subscribe({
+      next:(res:any)=>{
+        this.toaster.showSuccess("Admin details updated successfully")
+        //save admin details
+        localStorage.setItem("admin_name",res.name)
+        localStorage.setItem("admin_pswd",res.password)
+        this.editAdminStatus = false
+        this.onAdminChange.emit(res.name)
+      },
+      error:(err:any)=>{
+        this.toaster.showError("Updation failed!!! Please try after some time...")
+      }
+    })
+  }
+  cancel(){
+    this.editAdminStatus = false
   }
 }

@@ -37,4 +37,7 @@ export class HomeComponent implements OnInit{
     localStorage.removeItem("admin_password")
     this.router.navigateByUrl('')
   }
+  getUpdateAdmin(event:any){
+    this.admin_name = event
+  }
 }

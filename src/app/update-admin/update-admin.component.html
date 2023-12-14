@@ -8,10 +8,10 @@
         <input type="file" style="display: none;">
         <img width="150px" height="150px" class="img-fluid rounded"[src]="profileImage"alt="profile">
     </label>
-    <input [ngModel]="adminDetails.name" placeholder="Admin Name" type="text" class="form-control mb-2">
-    <input  [ngModel]="adminDetails.password" placeholder="Admin password" type="text" class="form-control mb-2">
+    <input [(ngModel)]="adminDetails.name" placeholder="Admin Name" type="text" class="form-control mb-2">
+    <input  [(ngModel)]="adminDetails.password" placeholder="Admin password" type="text" class="form-control mb-2">
     <div class="d-flex justify-content-evenly mt-3">
-        <input type="button" class="btn btn-warning" value="cancel">
-        <input type="button" class="btn btn-success" value="Update">
+        <input (click)="cancel()" type="button" class="btn btn-warning" value="cancel">
+        <input (click)="updateAdmin()" type="button" class="btn btn-success" value="Update">
     </div>
 </div>
