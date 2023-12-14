@@ -26,4 +26,15 @@ export class UpdateAdminComponent implements OnInit{
   editAdminBtnClicked(){
     this.editAdminStatus = true 
   }
+  getFile(event:any){
+    let file = event.target.files[0]
+    let fr = new FileReader()
+    fr.readAsDataURL(file)
+    fr.onload = (event:any)=>{
+      console.log(event.target.result);
+      this.profileImage = event.target.result
+      this.adminDetails.picture=this.profileImage
+      
+    }
+  }
 }
